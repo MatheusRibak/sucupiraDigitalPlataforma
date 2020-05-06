@@ -77,19 +77,7 @@ const Client = ({ companyName, location }) => {
                       {currentClient.name}
                     </Typography>
                   </Grid>
-                  <Grid
-                    container
-                    item
-                    direction="row"
-                    justify="flex-start"
-                    alignItems="center"
-                  >
-                    <PlaceIcon className={styles.icon} />
-                    <Typography className={styles.title}>
-                      {currentClient.city} - {currentClient.neighborhood},
-                      {currentClient.state}
-                    </Typography>
-                  </Grid>
+                 
                   {currentClient.obs && (
                     <Grid
                       container
@@ -127,6 +115,23 @@ const Client = ({ companyName, location }) => {
                 </Grid>
               </Grid>
             </Grid>
+
+           
+            {currentClient.obsProdutos && (
+                  <Card className={styles.delivery}>
+              <Typography className={styles.name}>
+                Descrição dos Produtos: {' '}
+              </Typography>
+             
+              <Typography className={styles.description} component="p">
+              {currentClient.obsProdutos}
+                      </Typography>
+
+              
+              
+
+            </Card>
+             )}
 
            
             {currentClient.allPhotos && (
