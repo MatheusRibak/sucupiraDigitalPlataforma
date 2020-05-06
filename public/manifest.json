@@ -1,0 +1,8 @@
+{
+  "short_name": "Sucupira Digital",
+  "name": "Sucupira Digital",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#054f77",
+  "background_color": "#ffffff"
+}
