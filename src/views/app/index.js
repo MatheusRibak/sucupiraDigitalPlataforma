@@ -1,13 +1,60 @@
-import React, { useState, useMemo, useContext, useEffect } from 'react'
+import React, { useState, useCallback, useMemo, useContext, useEffect } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
+import MenuItem from '@material-ui/core/MenuItem'
+import Select from '@material-ui/core/Select'
+import FormControl from '@material-ui/core/FormControl'
+import InputLabel from '@material-ui/core/InputLabel'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Link from '@material-ui/core/Link'
 import ReactGA from 'react-ga'
 
 import MainCard from './card'
 import ClientContext from '../../context'
 
 import useStyles from './styles'
+
+const DEPARTAMENTOS = [
+  'Artes',
+  'Artesanato e Costura',
+  'Automóveis e Motos',
+  'Roupas e acessórios para bebê',
+  'Beleza',
+  'Livros',
+  'Moda Masculina',
+  'Câmera e Foto',
+  'Telemóveis e Acessórios',
+  'Computadores e Acessórios Eletrônicos',
+  'Moda',
+  'Mobília',
+  'Moda para meninas',
+  'Fones de ouvido',
+  'Casa',
+  'Home Improvement',
+  'Industrial e científico',
+  'Cozinha',
+  'Equipamento de viagem para bagagem',
+  'Sapatos masculinos',
+  'Roupa para Homem',
+  'Moda masculina',
+  'Filmes e TV',
+  'Instrumentos musicais',
+  'Eletrônicos para Escritório',
+  'Suprimentos para animais de estimação',
+  'Ferramentas elétricas e manuais',
+  'Esportes & Ar Livre',
+  'Brinquedos e jogos',
+  'Videogames',
+  'Sapatos femininos',
+  'Roupas Femininas',
+  'Moda feminina',
+  'Jóias Femininas',
+  'Legumes e verduras',
+  'Mercearias',
+  'Charcuteria',
+  'Talho',
+  'Peixaria',
+]
 
 const App = ({ location }) => {
   const styles = useStyles()
@@ -24,6 +71,32 @@ const App = ({ location }) => {
     () => selectedState.filter((client) => client.city === city),
     [city, selectedState]
   )
+
+  const handleChange = useCallback((event) => {
+    setState(event.target.value)
+  }, [])
+
+  const handleCityChange = useCallback((event) => {
+    setCity(event.target.value)
+  }, [])
+
+  const stateCities = useMemo(() => {
+    const array = clients.map((client) =>
+      client.state === state ? client.city : null
+    )
+    return array
+      .filter((item, pos) => array.indexOf(item) === pos)
+      .filter((item) => item !== null)
+      .sort((a, b) => {
+        if (a > b) {
+          return 1
+        }
+        if (b > a) {
+          return -1
+        }
+        return 0
+      })
+  }, [state, clients])
 
   useEffect(() => {
     const trackingId = 'UA-162871245-1'
@@ -66,6 +139,56 @@ const App = ({ location }) => {
         >
           Lista de Comércios Cadastrados na Sucupira Digital
         </Typography>
+
+        <Grid container justify="center">
+          <FormControl className={styles.formControl}>
+            <InputLabel className={styles.label} htmlFor="state-native-simple">
+              Selecione apenas um departamento:
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={state}
+              onChange={handleChange}
+              className={styles.dropdown}
+              classes={{
+                icon: styles.icon,
+              }}
+              placeholder="Selecione um estado"
+            >
+              {DEPARTAMENTOS.map((state) => (
+                <MenuItem key={state} value={state}>
+                  {state}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          {state !== '' && selectedState.length > 1 && (
+            <FormControl className={styles.formControl}>
+              <InputLabel className={styles.label} htmlFor="state-native-simple">
+                Selecione a sua Cidade
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={city}
+                onChange={handleCityChange}
+                className={styles.dropdown}
+                classes={{
+                  icon: styles.icon,
+                }}
+                placeholder="Selecione um estado"
+              >
+                {stateCities.map((client) => (
+                  <MenuItem key={client} value={client}>
+                    {client}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          )}
+        </Grid>
+     
         
       </Grid>
       {selectedCity.length > 0 && (

@@ -14,6 +14,7 @@ import { Link as RouterLink } from '@reach/router'
 import Link from '@material-ui/core/Link'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import ReactGA from 'react-ga'
+import FacebookIcon from '@material-ui/icons/Facebook'
 
 import placeholder from '../../../assets/placeholder.jpeg'
 
@@ -134,11 +135,79 @@ const MainCard = ({ client }) => {
                 >
                   {client.name}
                 </Typography>
+
+                
               </Grid>
+              <Grid
+              container
+              item
+              direction="row"
+              justify="flex-start"
+              alignItems="center"
+            >
+              <FacebookIcon className={styles.icon} />
+              <Typography className={styles.name} variant="h5" component="h2">
+                {client.linkFacebook}
+              </Typography>
+            </Grid>
+
+           
+
+            <Grid
+              container
+              item
+              direction="row"
+              justify="flex-start"
+              alignItems="center"
+            >
+             
+              <Typography className={styles.name} variant="h5" component="h2">
+               
+              </Typography>
+            </Grid>
+              
+            <Grid
+              container
+              item
+              direction="row"
+              justify="flex-start"
+              alignItems="center"
+            >
+             
+              <Typography className={styles.name} variant="h5" component="h2">
+               
+              </Typography>
+            </Grid>
+            <Grid
+              container
+              item
+              direction="row"
+              justify="flex-start"
+              alignItems="center"
+            >
+             
+              <Typography className={styles.name} variant="h5" component="h2">
+               
+              </Typography>
+            </Grid>
+            <Grid
+              container
+              item
+              direction="row"
+              justify="flex-start"
+              alignItems="center"
+            >
+             
+              <Typography className={styles.name} variant="h5" component="h2">
+               
+              </Typography>
+            </Grid>
            
           </Grid>
         </CardContent>
       </CardActionArea>
+
+    
       <Grid className={styles.margin}>
         <CardActions>
           <Button

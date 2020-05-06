@@ -6,11 +6,10 @@ import CardMedia from '@material-ui/core/CardMedia'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import StorefrontIcon from '@material-ui/icons/Storefront'
 import Link from '@material-ui/core/Link'
-import PlaceIcon from '@material-ui/icons/Place'
 import PhoneIcon from '@material-ui/icons/Phone'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import ReactGA from 'react-ga'
-
+import FacebookIcon from '@material-ui/icons/Facebook'
 import ClientContext from '../../context'
 import placeholder from '../../assets/placeholder.jpeg'
 
@@ -112,6 +111,26 @@ const Client = ({ companyName, location }) => {
                       {currentClient.phoneNumber}
                     </Link>
                   </Grid>
+
+                  <Grid
+                    container
+                    item
+                    direction="row"
+                    justify="flex-start"
+                    alignItems="center"
+                  >
+                    <FacebookIcon className={styles.icon} />
+                    <Link
+                      onClick={loadLink('Instagram')}
+                      href={`https://www.facebook.com//${currentClient.linkFacebook
+                        .replace('@', '')
+                        .trim()}`}
+                      className={styles.title}
+                    >
+                      {currentClient.linkFacebook}
+                    </Link>
+                  </Grid>
+
                 </Grid>
               </Grid>
             </Grid>
