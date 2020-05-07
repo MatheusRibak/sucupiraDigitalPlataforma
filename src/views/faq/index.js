@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import ReactGA from 'react-ga'
+import Link from '@material-ui/core/Link'
 
 import useStyles from './styles'
 
@@ -53,7 +54,13 @@ const Faq = () => {
         <Typography component="p" variant="h2">
           Possui outras duvidas?
         </Typography>
-        Iremos lhe auxiliar com o maior prazer, nos envie um email para sucupiradigital2020@gmail.com
+        Iremos lhe auxiliar com o maior prazer, nos envie um email para o seguinte email:
+        <br/>
+        
+        <Link href="mailto:sucupiradigital2020@gmail.com">
+         sucupiradigital2020@gmail.com
+        </Link>
+        
       </Grid>
 
     </Grid>
