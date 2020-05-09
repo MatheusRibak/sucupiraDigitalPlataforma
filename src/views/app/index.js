@@ -6,7 +6,6 @@ import Select from '@material-ui/core/Select'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import ReactGA from 'react-ga'
 
 import MainCard from './card'
 import ClientContext from '../../context'
@@ -57,50 +56,16 @@ const DEPARTAMENTOS = [
 
 const App = ({ location }) => {
   const styles = useStyles()
-  const [state, setState] = useState('')
-  const [city, setCity] = useState('')
+  const [departament, setDepartament] = useState('')
   const clients = useContext(ClientContext)
 
   const selectedState = useMemo(
-    () => clients.filter((client) => client.state === state),
-    [state, clients]
-  )
-
-  const selectedCity = useMemo(
-    () => selectedState.filter((client) => client.city === city),
-    [city, selectedState]
+    () => clients.filter((client) => client.departamento.find(value => console.log(value, departament,  value === departament) || value === departament)),
+    [departament, clients]
   )
 
   const handleChange = useCallback((event) => {
-    setState(event.target.value)
-  }, [])
-
-  const handleCityChange = useCallback((event) => {
-    setCity(event.target.value)
-  }, [])
-
-  const stateCities = useMemo(() => {
-    const array = clients.map((client) =>
-      client.state === state ? client.city : null
-    )
-    return array
-      .filter((item, pos) => array.indexOf(item) === pos)
-      .filter((item) => item !== null)
-      .sort((a, b) => {
-        if (a > b) {
-          return 1
-        }
-        if (b > a) {
-          return -1
-        }
-        return 0
-      })
-  }, [state, clients])
-
-  useEffect(() => {
-    const trackingId = 'UA-162871245-1'
-    ReactGA.initialize(trackingId)
-    ReactGA.pageview('/homepage')
+    setDepartament(event.target.value)
   }, [])
 
   const randomNumbers = useMemo(
@@ -115,11 +80,10 @@ const App = ({ location }) => {
   ])
 
   useEffect(() => {
-    if (location.state && location.state.state !== undefined) {
-      setState(location.state.state)
-      setCity(location.state.city)
+    if (location.departament && location.departament.departament !== undefined) {
+      setDepartament(location.departament.departament)
     }
-  }, [location.state])
+  }, [location.departament])
 
   return (
     <Grid container direction="column" justify="center" alignItems="center">
@@ -141,13 +105,13 @@ const App = ({ location }) => {
 
         <Grid container justify="center">
           <FormControl className={styles.formControl}>
-            <InputLabel className={styles.label} htmlFor="state-native-simple">
+            <InputLabel className={styles.label} htmlFor="departament-native-simple">
               Selecione apenas um departamento:
             </InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={state}
+              value={departament}
               onChange={handleChange}
               className={styles.dropdown}
               classes={{
@@ -155,54 +119,28 @@ const App = ({ location }) => {
               }}
               placeholder="Selecione um estado"
             >
-              {DEPARTAMENTOS.map((state) => (
-                <MenuItem key={state} value={state}>
-                  {state}
+              {DEPARTAMENTOS.map((departament) => (
+                <MenuItem key={departament} value={departament}>
+                  {departament}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
-          {state !== '' && selectedState.length > 1 && (
-            <FormControl className={styles.formControl}>
-              <InputLabel className={styles.label} htmlFor="state-native-simple">
-                Selecione a sua Cidade
-              </InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={city}
-                onChange={handleCityChange}
-                className={styles.dropdown}
-                classes={{
-                  icon: styles.icon,
-                }}
-                placeholder="Selecione um estado"
-              >
-                {stateCities.map((client) => (
-                  <MenuItem key={client} value={client}>
-                    {client}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          )}
         </Grid>
-     
-        
       </Grid>
-      {selectedCity.length > 0 && (
+      {selectedState.length > 0 && (
         <Typography
           className={styles.total}
           component="h1"
           color="primary"
           variant="h2"
         >
-          Total de {selectedCity.length} Comerciante{selectedCity.length > 1 && 's'}{' '}
+          Total de {selectedState.length} Comerciante{selectedState.length > 1 && 's'}{' '}
           encontrados
         </Typography>
       )}
       {clients.length === 0 && <CircularProgress />}
-      {randomNumbers[0] !== 0 && selectedState.length === 0 && state !== '' && (
+      {randomNumbers[0] !== 0 && selectedState.length === 0 && departament !== '' && (
         <Grid
           container
           justify="flex-start"
@@ -222,23 +160,17 @@ const App = ({ location }) => {
       )}
       {clients && (
         <Grid className={styles.cards}>
-          {selectedCity.length > 0 &&
-            selectedCity.map((client) => (
-              <MainCard key={client.id} client={client} />
-            ))}
-          {selectedCity.length === 0 &&
+          {departament === '' &&
             selectedState.map((client) => (
               <MainCard key={client.id} client={client} />
             ))}
           {randomNumbers[0] !== 0 &&
-            state === '' &&
-            city === '' &&
+            departament === '' &&
             randomClients.map((client) => (
               <MainCard key={client.id} client={client} />
             ))}
         </Grid>
       )}
-     
     </Grid>
   )
 }

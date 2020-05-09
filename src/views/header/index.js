@@ -20,7 +20,16 @@ const Header = ({ children, location }) => {
     Tabletop.init({
       key: '1zPa47bYiI-fYus9ETZIwqg1Qpj7acyDTNBLSyP2S3t4',
       callback: (data, tabletop) => {
-        setClients(data.filter((info) => info.accepted === 'TRUE'))
+        setClients(
+          data
+            .filter((info) => info.accepted === 'TRUE')
+            .map((data) => {
+              return {
+                ...data,
+                departamento: data.departamento.split(', '),
+              }
+            })
+        )
       },
       simpleSheet: true,
     })
@@ -49,8 +58,7 @@ const Header = ({ children, location }) => {
             to="/"
             state={
               location.state && {
-                state: location.state.state,
-                city: location.state.city,
+                departament: location.state.departament,
               }
             }
           >
@@ -65,8 +73,7 @@ const Header = ({ children, location }) => {
             to="/"
             state={
               location.state && {
-                state: location.state.state,
-                city: location.state.city,
+                departament: location.state.departament,
               }
             }
           >

@@ -8,7 +8,6 @@ import StorefrontIcon from '@material-ui/icons/Storefront'
 import Link from '@material-ui/core/Link'
 import PhoneIcon from '@material-ui/icons/Phone'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import ReactGA from 'react-ga'
 import FacebookIcon from '@material-ui/icons/Facebook'
 import ClientContext from '../../context'
 import placeholder from '../../assets/placeholder.jpeg'
@@ -30,17 +29,6 @@ const Client = ({ companyName, location }) => {
       setLoadingImage(false)
     }
   }, [])
-
-  const loadLink = useCallback(
-    (type) => () => {
-      ReactGA.event({
-        category: type,
-        action: 'Clicou no botão',
-      })
-    },
-    []
-  )
-
 
   return (
     <Grid className={styles.container}>
@@ -76,7 +64,7 @@ const Client = ({ companyName, location }) => {
                       {currentClient.name}
                     </Typography>
                   </Grid>
-                 
+
                   {currentClient.obs && (
                     <Grid
                       container
@@ -101,7 +89,6 @@ const Client = ({ companyName, location }) => {
                   >
                     <PhoneIcon className={styles.icon} />
                     <Link
-                      onClick={loadLink('Telefone')}
                       className={styles.title}
                       href={`tel:${currentClient.phoneNumber
                         .match(/[0-9]/g)
@@ -121,7 +108,6 @@ const Client = ({ companyName, location }) => {
                   >
                     <FacebookIcon className={styles.icon} />
                     <Link
-                      onClick={loadLink('Instagram')}
                       href={`https://www.facebook.com//${currentClient.linkFacebook
                         .replace('@', '')
                         .trim()}`}
@@ -130,29 +116,22 @@ const Client = ({ companyName, location }) => {
                       {currentClient.linkFacebook}
                     </Link>
                   </Grid>
-
                 </Grid>
               </Grid>
             </Grid>
 
-           
             {currentClient.obsProdutos && (
-                  <Card className={styles.delivery}>
-              <Typography className={styles.name}>
-                Descrição dos Produtos: {' '}
-              </Typography>
-             
-              <Typography className={styles.description} component="p">
-              {currentClient.obsProdutos}
-                      </Typography>
+              <Card className={styles.delivery}>
+                <Typography className={styles.name}>
+                  Descrição dos Produtos:{' '}
+                </Typography>
 
-              
-              
+                <Typography className={styles.description} component="p">
+                  {currentClient.obsProdutos}
+                </Typography>
+              </Card>
+            )}
 
-            </Card>
-             )}
-
-           
             {currentClient.allPhotos && (
               <Card className={styles.photos}>
                 <Typography className={styles.name}>Produtos:</Typography>
