@@ -13,7 +13,6 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import { Link as RouterLink } from '@reach/router'
 import Link from '@material-ui/core/Link'
 import CircularProgress from '@material-ui/core/CircularProgress'
-import ReactGA from 'react-ga'
 import FacebookIcon from '@material-ui/icons/Facebook'
 
 import placeholder from '../../../assets/placeholder.jpeg'
@@ -69,18 +68,10 @@ const MainCard = ({ client }) => {
     }
   }, [])
 
-  const setReactGA = useCallback(() => {
-    ReactGA.event({
-      category: client.linkFacebook.replace('@', ''),
-      action: 'Clicou no card',
-    })
-  }, [client.linkFacebook])
-
   return (
     <Card className={styles.root}>
       <CardActionArea
         component={RouterLink}
-        onClick={setReactGA}
         to={`/${client.instagram.trim()}`}
         state={{ state: client.state, city: client.city }}
       >
@@ -116,29 +107,21 @@ const MainCard = ({ client }) => {
                 {client.name}
               </Typography>
             </Grid>
-           
-           
-            
-              <Grid
-                container
-                item
-                direction="row"
-                justify="flex-start"
-                alignItems="center"
-                className={styles.obs}
-              >
-                <AccountCircleIcon className={styles.icon} />
-                <Typography
-                  className={styles.description}
-                  variant="h5"
-                  component="h2"
-                >
-                  {client.name}
-                </Typography>
 
-                
-              </Grid>
-              <Grid
+            <Grid
+              container
+              item
+              direction="row"
+              justify="flex-start"
+              alignItems="center"
+              className={styles.obs}
+            >
+              <AccountCircleIcon className={styles.icon} />
+              <Typography className={styles.description} variant="h5" component="h2">
+                {client.name}
+              </Typography>
+            </Grid>
+            <Grid
               container
               item
               direction="row"
@@ -151,7 +134,19 @@ const MainCard = ({ client }) => {
               </Typography>
             </Grid>
 
-           
+            <Grid
+              container
+              item
+              direction="row"
+              justify="flex-start"
+              alignItems="center"
+            >
+              <Typography
+                className={styles.name}
+                variant="h5"
+                component="h2"
+              ></Typography>
+            </Grid>
 
             <Grid
               container
@@ -160,23 +155,11 @@ const MainCard = ({ client }) => {
               justify="flex-start"
               alignItems="center"
             >
-             
-              <Typography className={styles.name} variant="h5" component="h2">
-               
-              </Typography>
-            </Grid>
-              
-            <Grid
-              container
-              item
-              direction="row"
-              justify="flex-start"
-              alignItems="center"
-            >
-             
-              <Typography className={styles.name} variant="h5" component="h2">
-               
-              </Typography>
+              <Typography
+                className={styles.name}
+                variant="h5"
+                component="h2"
+              ></Typography>
             </Grid>
             <Grid
               container
@@ -185,10 +168,11 @@ const MainCard = ({ client }) => {
               justify="flex-start"
               alignItems="center"
             >
-             
-              <Typography className={styles.name} variant="h5" component="h2">
-               
-              </Typography>
+              <Typography
+                className={styles.name}
+                variant="h5"
+                component="h2"
+              ></Typography>
             </Grid>
             <Grid
               container
@@ -197,17 +181,16 @@ const MainCard = ({ client }) => {
               justify="flex-start"
               alignItems="center"
             >
-             
-              <Typography className={styles.name} variant="h5" component="h2">
-               
-              </Typography>
+              <Typography
+                className={styles.name}
+                variant="h5"
+                component="h2"
+              ></Typography>
             </Grid>
-           
           </Grid>
         </CardContent>
       </CardActionArea>
 
-    
       <Grid className={styles.margin}>
         <CardActions>
           <Button
