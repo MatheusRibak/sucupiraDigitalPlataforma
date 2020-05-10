@@ -60,7 +60,7 @@ const App = ({ location }) => {
   const clients = useContext(ClientContext)
 
   const selectedState = useMemo(
-    () => clients.filter((client) => client.departamento.find(value => console.log(value, departament,  value === departament) || value === departament)),
+    () => clients.filter((client) => client.departamento.find(value => value === departament)),
     [departament, clients]
   )
 
@@ -80,10 +80,11 @@ const App = ({ location }) => {
   ])
 
   useEffect(() => {
-    if (location.departament && location.departament.departament !== undefined) {
-      setDepartament(location.departament.departament)
+    if (location.departament && location.state.departament !== undefined) {
+      setDepartament(location.state.departament)
     }
   }, [location.departament])
+
 
   return (
     <Grid container direction="column" justify="center" alignItems="center">
@@ -160,13 +161,13 @@ const App = ({ location }) => {
       )}
       {clients && (
         <Grid className={styles.cards}>
-          {departament === '' &&
+          {departament.length > 0 &&
             selectedState.map((client) => (
               <MainCard key={client.id} client={client} />
             ))}
-          {randomNumbers[0] !== 0 &&
-            departament === '' &&
-            randomClients.map((client) => (
+          {
+            departament.length === 0 &&
+            clients.map((client) => (
               <MainCard key={client.id} client={client} />
             ))}
         </Grid>
